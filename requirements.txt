@@ -1,2 +1,2 @@
-roulette_neighborsstreamlit
+streamlit
 pandas
