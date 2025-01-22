@@ -119,8 +119,8 @@ def main():
         """
     )
 
-    # Slider for default neighbor count
-    default_neighbors = st.slider("Select default number of neighbors:", min_value=1, max_value=5, value=3)
+    # Slider for default neighbor count with only values 1 and 3
+    default_neighbors = st.selectbox("Select default number of neighbors:", [1, 3])
 
     user_input = st.text_input("Input your numbers and neighbors:", "")
 
