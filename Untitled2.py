@@ -69,7 +69,7 @@ def parse_input(input_str):
         elif len(parts) == 1:
             try:
                 number = int(parts[0].strip())
-                neighbor_count = 1  # Default neighbor count
+                neighbor_count = 3  # Default neighbor count
                 number_neighbor_pairs.append((number, neighbor_count))
             except ValueError:
                 raise ValueError(f"Invalid number format for '{pair}'. Ensure it's an integer.")
