@@ -119,20 +119,12 @@ def main():
         """
     )
 
-    # Custom CSS to adjust the slider width
-    st.markdown("""
-        <style>
-            .streamlit-expanderHeader {
-                font-size: 1.5rem;
-            }
-            .stSlider>div>div>input {
-                width: 150px;  /* Adjust the width to your preference */
-            }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # Slider for default neighbor count, limited to 1 and 3
-    default_neighbors = st.slider("Select default number of neighbors:", min_value=1, max_value=3, step=2, value=1)
+    # Radio buttons for selecting the default neighbor count
+    default_neighbors = st.radio(
+        "Select default number of neighbors:",
+        [1, 3],  # Only these two options
+        index=0  # Default to 1
+    )
 
     user_input = st.text_input("Input your numbers and neighbors:", "")
 
