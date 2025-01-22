@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[7]:
-
-
 import streamlit as st
 import pandas as pd
 
@@ -45,12 +42,14 @@ def roulette_neighbors(number_neighbor_pairs):
 
     return result
 
-def parse_input(input_str):
+def parse_input(input_str, default_neighbors):
     """
     Parses user input in the format 'number count,number,...'
+    Uses the default neighbor count if no count is specified.
 
     Parameters:
         input_str (str): The user input string.
+        default_neighbors (int): The default neighbor count.
 
     Returns:
         list of tuples: Each tuple contains (number, neighbor_count).
@@ -69,8 +68,7 @@ def parse_input(input_str):
         elif len(parts) == 1:
             try:
                 number = int(parts[0].strip())
-                neighbor_count = 3  # Default neighbor count
-                number_neighbor_pairs.append((number, neighbor_count))
+                number_neighbor_pairs.append((number, default_neighbors))  # Use default neighbor count
             except ValueError:
                 raise ValueError(f"Invalid number format for '{pair}'. Ensure it's an integer.")
         else:
@@ -121,12 +119,15 @@ def main():
         """
     )
 
+    # Slider for default neighbor count
+    default_neighbors = st.slider("Select default number of neighbors:", min_value=1, max_value=5, value=3)
+
     user_input = st.text_input("Input your numbers and neighbors:", "")
 
     if user_input:
         try:
-            # Parse the user input
-            number_neighbor_pairs = parse_input(user_input)
+            # Parse the user input with the default neighbor count
+            number_neighbor_pairs = parse_input(user_input, default_neighbors)
 
             # Calculate the neighbors for the provided inputs
             neighbors = roulette_neighbors(number_neighbor_pairs)
@@ -150,10 +151,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# In[ ]:
-
-
-
-
