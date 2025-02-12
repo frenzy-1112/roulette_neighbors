@@ -42,14 +42,13 @@ def roulette_neighbors(number_neighbor_pairs):
 
     return result
 
-def parse_input(input_str, default_neighbors):
+def parse_input(input_str):
     """
     Parses user input in the format 'number count,number,...'
-    Uses the default neighbor count if no count is specified.
+    Uses the default neighbor count logic based on the number of inputs.
 
     Parameters:
         input_str (str): The user input string.
-        default_neighbors (int): The default neighbor count.
 
     Returns:
         list of tuples: Each tuple contains (number, neighbor_count).
@@ -80,7 +79,7 @@ def parse_input(input_str, default_neighbors):
                 elif num_inputs == 2:
                     neighbor_count = 3
                 else:
-                    neighbor_count = default_neighbors
+                    neighbor_count = 1  # Default to 1 for all other cases
                 number_neighbor_pairs.append((number, neighbor_count))
             except ValueError:
                 raise ValueError(f"Invalid number format for '{pair}'. Ensure it's an integer.")
@@ -127,24 +126,17 @@ def main():
     st.write(
         """Enter the numbers and their neighbors:
         
-        Use the format: `number neighbor_count, number neighbor_count` or just `number` for a default neighbor count.
+        Use the format: `number neighbor_count, number neighbor_count` or just `number` for default behavior.
         For example: `3 3, 8 1, 12`
         """
-    )
-
-    # Radio buttons for selecting the default neighbor count
-    default_neighbors = st.radio(
-        "Select default number of neighbors:",
-        [1, 3],  # Only these two options
-        index=0  # Default to 1
     )
 
     user_input = st.text_input("Input your numbers and neighbors:", "")
 
     if user_input:
         try:
-            # Parse the user input with the default neighbor count
-            number_neighbor_pairs = parse_input(user_input, default_neighbors)
+            # Parse the user input
+            number_neighbor_pairs = parse_input(user_input)
 
             # Calculate the neighbors for the provided inputs
             neighbors = roulette_neighbors(number_neighbor_pairs)
