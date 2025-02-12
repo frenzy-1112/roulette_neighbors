@@ -56,7 +56,11 @@ def parse_input(input_str, default_neighbors):
     """
     pairs = input_str.split(',')
     number_neighbor_pairs = []
-    for pair in pairs:
+
+    # Determine the number of inputs
+    num_inputs = len(pairs)
+
+    for i, pair in enumerate(pairs):
         parts = pair.strip().split()
         if len(parts) == 2:
             try:
@@ -68,7 +72,16 @@ def parse_input(input_str, default_neighbors):
         elif len(parts) == 1:
             try:
                 number = int(parts[0].strip())
-                number_neighbor_pairs.append((number, default_neighbors))  # Use default neighbor count
+                # Apply different default neighbor counts based on the number of inputs
+                if num_inputs == 5:
+                    neighbor_count = 1
+                elif num_inputs == 3:
+                    neighbor_count = 1 if i == 0 else 3
+                elif num_inputs == 2:
+                    neighbor_count = 3
+                else:
+                    neighbor_count = default_neighbors
+                number_neighbor_pairs.append((number, neighbor_count))
             except ValueError:
                 raise ValueError(f"Invalid number format for '{pair}'. Ensure it's an integer.")
         else:
@@ -114,7 +127,7 @@ def main():
     st.write(
         """Enter the numbers and their neighbors:
         
-        Use the format: `number neighbor_count, number neighbor_count` or just `number` for a default neighbor count of 1.
+        Use the format: `number neighbor_count, number neighbor_count` or just `number` for a default neighbor count.
         For example: `3 3, 8 1, 12`
         """
     )
